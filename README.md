@@ -9,7 +9,7 @@
 2. **Клонируйте репозиторий на ваш компьютер:**
 
    ```bash
-   git clone https://github.com/yourusername/ticket-calculator.git
+   git clone https://github.com/neonoir8/ticket-calculator.git
 
  3. **Перейдите в директорию проекта**
     
