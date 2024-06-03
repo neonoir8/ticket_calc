@@ -22,6 +22,10 @@ public class TicketCalculator {
         this.destination = destination;
     }
 
+    /**
+     * Анализирует билеты и выводит минимальное время полета для каждого авиаперевозчика,
+     * среднюю и медианную цену билетов, а также разницу между средней и медианной ценой.
+     */
     public void analyzeTickets() {
         try {
             List<Ticket> tickets = TicketDataReader.readTickets(filePath, origin, destination);
@@ -41,6 +45,12 @@ public class TicketCalculator {
         }
     }
 
+    /**
+     * Вычисляет минимальное время полета для каждого авиаперевозчика.
+     *
+     * @param tickets список билетов
+     * @return карта, где ключ - название авиаперевозчика, а значение - минимальное время полета для этого перевозчика
+     */
     private Map<String, Duration> calculateMinFlightTimes(List<Ticket> tickets) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yy[ H:mm]");
         Map<String, Duration> minFlightTimes = new HashMap<>();
@@ -56,6 +66,11 @@ public class TicketCalculator {
         return minFlightTimes;
     }
 
+    /**
+     * Печатает минимальное время полета для каждого авиаперевозчика.
+     *
+     * @param minFlightTimes карта, где ключ - название авиаперевозчика, а значение - минимальное время полета для этого перевозчика
+     */
     private void printMinFlightTimes(Map<String, Duration> minFlightTimes) {
         for (Map.Entry<String, Duration> entry : minFlightTimes.entrySet()) {
             long hours = entry.getValue().toHours();
@@ -64,16 +79,40 @@ public class TicketCalculator {
         }
     }
 
+    /**
+     * Вычисляет среднюю цену из списка цен.
+     * <p>
+     * Средняя цена - это сумма всех цен, деленная на количество цен.
+     *
+     * @param prices список цен билетов
+     * @return средняя цена
+     */
     private double calculateAveragePrice(List<Integer> prices) {
-        return prices.stream().mapToInt(Integer::intValue).average().orElse(0);
+        return prices
+                .stream()
+                .mapToInt(Integer::intValue)
+                .average()
+                .orElse(0);
     }
 
+    /**
+     * Вычисляет медианную цену из списка цен.
+     * <p>
+     * Медиана - это значение, которое разделяет отсортированный список на две равные части,
+     * в случае четного количества элементов - это среднее значение двух средних элементов.
+     *
+     * @param prices список цен билетов
+     * @return медианная цена
+     */
     private double calculateMedianPrice(List<Integer> prices) {
         Collections.sort(prices);
         double medianPrice;
+        // Проверяем, четное или нечетное количество элементов в списке
         if (prices.size() % 2 == 0) {
+            // Если количество элементов четное, медиана - это среднее значение двух средних элементов
             medianPrice = (prices.get(prices.size() / 2 - 1) + prices.get(prices.size() / 2)) / 2.0;
         } else {
+            // Если количество элементов нечетное, медиана - это средний элемент
             medianPrice = prices.get(prices.size() / 2);
         }
         return medianPrice;
