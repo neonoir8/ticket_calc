@@ -12,14 +12,18 @@
    git clone https://github.com/yourusername/ticket-calculator.git
 
  3. **Перейдите в директорию проекта**
-
-   cd ticket-calculator
+    
+    ```bash
+    cd ticket-calculator
 
  4. **Соберите проект в JAR-файл:**
 
+     ```bash
      mvn clean compile package install
 
- 5. **Запустите JAR-файл командой:**
+ 6. **Запустите JAR-файл командой:**
+    
+    ```bash
     java -jar target/ticket_calc.jar
 
 Эта команда запустит приложение, используя собранный JAR-файл.
